@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcos Santiago - Web Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .contact-item:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .projects {
+            display: grid;
+            gap: 40px;
+        }
+
+        .project {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .project:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-header {
+            padding: 30px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .project h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .project-description {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .project-content {
+            padding: 30px;
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .project-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .iframe-fallback {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px dashed #ddd;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border: 2px solid #667eea;
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .tech-tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .contact-info {
+                gap: 15px;
+            }
+
+            .project-header,
+            .project-content {
+                padding: 20px;
+            }
+
+            .iframe-container {
+                height: 400px;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Marcos Santiago</h1>
+            <p class="subtitle">Web Developer & Designer</p>
+            <div class="contact-info">
+                <a href="mailto:buildwithsantiago@gmail.com" class="contact-item">
+                    📧 BuildWithSantiago@gmail.com
+                </a>
+                <a href="tel:+1234567890" class="contact-item">
+                    📞 (475) 529-5135
+                </a>
+                <a href="https://linkedin.com/in/marcos-santiago-cs" target="_blank" class="contact-item">
+                    💼 LinkedIn
+                </a>
+                <a href="https://github.com/polonextdoor" target="_blank" class="contact-item">
+                    🔗 GitHub
+                </a>
+            </div>
+        </header>
+
+        <div class="projects">
+            <!-- Project 1 -->
+            <div class="project">
+                <div class="project-header">
+                    <h2>WCSU Career Success Center Website</h2>
+                    <p class="project-description">
+                        A modern, mobile responsive website for the Career Center at WCSU, offering the entire in person experience virtually. Built with WordPress and custom CSS for optimal performance.
+                    </p>
+                </div>
+                <div class="project-content">
+                    <div class="iframe-container">
+                        <iframe
+                            src="https://wcsu.edu/careersuccess"
+                            class="project-iframe"
+                            onload="this.style.opacity=1"
+                            onerror="showFallback(this)"
+                        ></iframe>
+                        <div class="iframe-fallback">
+                            <p>🖼️ Live site preview unavailable</p>
+                            <p>Click "View Live Site" to see the full website</p>
+                        </div>
+                    </div>
+
+                    <div class="tech-stack">
+                        <span class="tech-tag">WordPress</span>
+                        <span class="tech-tag">Custom CSS</span>
+                        <span class="tech-tag">Responsive Design</span>
+                        <span class="tech-tag">SEO Optimized</span>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="https://wcsu.edu/careersuccess" target="_blank" class="btn">
+                            🔗 View Live Site
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            📋 Case Study
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project">
+                <div class="project-header">
+                    <h2>WCSU Workforce Development</h2>
+                    <p class="project-description">
+                        Professional website for the School of Graduate, International and Career Studies offering certifications for
+                        The Workforce Education and Lifelong Learning (WELL) Initiative at Western Connecticut State University.
+                         established a structured, comprehensive ecosystem to developing and delivering continuing education and lifelong learning offerings.
+                    </p>
+                </div>
+                <div class="project-content">
+                    <div class="iframe-container">
+                        <iframe
+                            src="https://www.wcsu.edu/sgics/workforce-education-and-lifelong-learning/"
+                            class="project-iframe"
+                            onload="this.style.opacity=1"
+                            onerror="showFallback(this)"
+                        ></iframe>
+                        <div class="iframe-fallback">
+                            <p>🖼️ Live site preview unavailable</p>
+                            <p>Click "View Live Site" to see the full website</p>
+                        </div>
+                    </div>
+
+                    <div class="tech-stack">
+                        <span class="tech-tag">WordPress</span>
+                        <span class="tech-tag">Elementor</span>
+                        <span class="tech-tag">Contact Forms</span>
+                        <span class="tech-tag">Image Optimization</span>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="https://www.wcsu.edu/sgics/workforce-education-and-lifelong-learning/" target="_blank" class="btn">
+                            🔗 View Live Site
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            📋 Case Study
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project">
+                <div class="project-header">
+                    <h2>Ancell School of Business Entrepreneurship Web Page </h2>
+                    <p class="project-description">
+                        Interactive web page designed to give out valuable resources and showcase Dr. Assenzas 7 step fromula for new business and startups looking to thrive.
+                    </p>
+                </div>
+                <div class="project-content">
+                    <div class="iframe-container">
+                        <iframe
+                            src="https://www.wcsu.edu/careersuccess/entrepreneurship/"
+                            class="project-iframe"
+                            onload="this.style.opacity=1"
+                            onerror="showFallback(this)"
+                        ></iframe>
+                        <div class="iframe-fallback">
+                            <p>🖼️ Live site preview unavailable</p>
+                            <p>Click "View Live Site" to see the full website</p>
+                        </div>
+                    </div>
+
+                    <div class="tech-stack">
+                        <span class="tech-tag">WordPress</span>
+                        <span class="tech-tag">WP Rocket</span>
+                        <span class="tech-tag">Yoast SEO</span>
+                        <span class="tech-tag">Revolution Slider</span>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="https://www.wcsu.edu/careersuccess/entrepreneurship/" target="_blank" class="btn">
+                            🔗 View Live Site
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            📋 Case Study
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Build With Santiago. Available for freelance web development projects.</p>
+        </footer>
+    </div>
+
+    <script>
+        function showFallback(iframe) {
+            const container = iframe.parentElement;
+            const fallback = container.querySelector('.iframe-fallback');
+            iframe.style.display = 'none';
+            fallback.style.display = 'block';
+        }
+
+        // Add smooth scrolling for better UX
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Add loading state for iframes
+            document.querySelectorAll('.project-iframe').forEach(iframe => {
+                iframe.style.opacity = '0';
+                iframe.style.transition = 'opacity 0.3s ease';
+            });
+        });
+    </script>
+</body>
+</html>
