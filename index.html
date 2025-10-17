@@ -151,6 +151,13 @@
             align-items: center;
             justify-content: center;
             z-index: 2;
+            opacity: 1;
+            transition: opacity 0.6s ease; 
+        }
+
+        .iframe-loader.fade-out {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .iframe-loader img {
@@ -294,39 +301,44 @@
                     </p>
                 </div>
                 <div class="project-content">
-                    <div class="iframe-loader">
-                        <img src="loading.gif" alt="Loading..." />
-                    </div>
-                    <div class="iframe-container">
-                        <iframe
-                            src="https://wcsu.edu/careersuccess"
-                            class="project-iframe"
-                            onload="hideLoader(this)"
-                            onerror="showFallback(this)"
-                        ></iframe>
-                        <div class="iframe-fallback">
-                            <p>🖼️ Live site preview unavailable</p>
-                            <p>Click "View Live Site" to see the full website</p>
-                        </div>
-                    </div>
+    <div class="iframe-container">
+        <!--  Loading GIF overlay -->
+        <div class="iframe-loader">
+            <img src="loading.gif" alt="Loading..." />
+        </div>
 
-                    <div class="tech-stack">
-                        <span class="tech-tag">WordPress</span>
-                        <span class="tech-tag">Custom CSS</span>
-                        <span class="tech-tag">Responsive Design</span>
-                        <span class="tech-tag">SEO Optimized</span>
-                    </div>
+        <!--  Iframe -->
+        <iframe
+            src="https://wcsu.edu/careersuccess"
+            class="project-iframe"
+            onload="hideLoader(this)"
+            onerror="showFallback(this)"
+        ></iframe>
 
-                    <div class="project-links">
-                        <a href="https://wcsu.edu/careersuccess" target="_blank" class="btn">
-                            🔗 View Live Site
-                        </a>
-                        <a href="careercenter_casestudy.html" class="btn btn-secondary">
-                            📋 Case Study
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <!--  Fallback -->
+        <div class="iframe-fallback">
+            <p>🖼️ Live site preview unavailable</p>
+            <p>Click "View Live Site" to see the full website</p>
+        </div>
+    </div>
+
+    <div class="tech-stack">
+        <span class="tech-tag">WordPress</span>
+        <span class="tech-tag">Custom CSS</span>
+        <span class="tech-tag">Responsive Design</span>
+        <span class="tech-tag">SEO Optimized</span>
+    </div>
+
+    <div class="project-links">
+        <a href="https://wcsu.edu/careersuccess" target="_blank" class="btn">
+            🔗 View Live Site
+        </a>
+        <a href="careercenter_casestudy.html" class="btn btn-secondary">
+            📋 Case Study
+        </a>
+    </div>
+</div>
+
 
             <!-- Project 2 -->
             <div class="project">
@@ -417,39 +429,32 @@
     </div>
 
     <script>
-        function showFallback(iframe) {
-            const container = iframe.parentElement;
-            const fallback = container.querySelector('.iframe-fallback');
-            const loader = container.querySelector('.iframe-loader');
-            iframe.style.display = 'none';
-            fallback.style.display = 'block';
-        }
+    function showFallback(iframe) {
+        const container = iframe.parentElement;
+        const fallback = container.querySelector('.iframe-fallback');
+        const loader = container.querySelector('.iframe-loader');
+        iframe.style.display = 'none';
+        if (loader) loader.style.display = 'none';
+        fallback.style.display = 'block';
+    }
 
-        function hideLoader(iframe) {
-            const container = iframe.parentElement;
-            const loader = container.querySelector('.iframe-loader');
-            iframe.style.opacity = '1';
-            if (loader) loader.style.display = 'none';
-            fallback.style.display = 'block';
+    function hideLoader(iframe) {
+        const container = iframe.parentElement;
+        const loader = container.querySelector('.iframe-loader');
+        if (loader) {
+            loader.classList.add('fade-out'); // 
+            setTimeout(() => loader.style.display = 'none', 600); // 
         }
-        // Add smooth scrolling for better UX
-        document.addEventListener('DOMContentLoaded', function() {
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
+        iframe.style.opacity = '1';
+    }
 
-            // Add loading state for iframes
-            document.querySelectorAll('.project-iframe').forEach(iframe => {
-                iframe.style.opacity = '0';
-                iframe.style.transition = 'opacity 0.3s ease';
-            });
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize iframes hidden
+        document.querySelectorAll('.project-iframe').forEach(iframe => {
+            iframe.style.opacity = '0';
+            iframe.style.transition = 'opacity 0.5s ease';
         });
-    </script>
+    });
+</script>
 </body>
 </html>
