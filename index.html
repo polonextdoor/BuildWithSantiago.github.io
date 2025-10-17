@@ -140,6 +140,25 @@
             border: 2px dashed #ddd;
         }
 
+        .iframe-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .iframe-loader img {
+            width: 80px; /* adjust size of the GIF */
+            height: auto;
+        }
+      
+
         .project-links {
             display: flex;
             gap: 15px;
@@ -275,11 +294,14 @@
                     </p>
                 </div>
                 <div class="project-content">
+                    <div class="iframe-loader">
+                        <img src="loading.gif" alt="Loading..." />
+                    </div>
                     <div class="iframe-container">
                         <iframe
                             src="https://wcsu.edu/careersuccess"
                             class="project-iframe"
-                            onload="this.style.opacity=1"
+                            onload="hideLoader(this)"
                             onerror="showFallback(this)"
                         ></iframe>
                         <div class="iframe-fallback">
@@ -398,10 +420,18 @@
         function showFallback(iframe) {
             const container = iframe.parentElement;
             const fallback = container.querySelector('.iframe-fallback');
+            const loader = container.querySelector('.iframe-loader');
             iframe.style.display = 'none';
             fallback.style.display = 'block';
         }
 
+        function hideLoader(iframe) {
+            const container = iframe.parentElement;
+            const loader = container.querySelector('.iframe-loader');
+            iframe.style.opacity = '1';
+            if (loader) loader.style.display = 'none';
+            fallback.style.display = 'block';
+        }
         // Add smooth scrolling for better UX
         document.addEventListener('DOMContentLoaded', function() {
             // Smooth scrolling for anchor links
